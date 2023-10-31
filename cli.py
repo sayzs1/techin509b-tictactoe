@@ -13,9 +13,11 @@ if __name__ == '__main__':
     current_user = 'O'
     while winner == None:
         print("f'Player {current_user}: take a turn!")
+        
         # TODO: Show the board to the user.
         for row in board:
             print(row)
+
         # TODO: Input a move from the player.
         while True:
             try:
