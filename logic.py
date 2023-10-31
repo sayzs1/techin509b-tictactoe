@@ -14,9 +14,26 @@ def make_empty_board():
 def get_winner(board):
     """Determines the winner of the given board.
     Returns 'X', 'O', or None."""
-    return None  # FIXME
+    # Check rows and columns
+    for i in range(3):
+        if board[i][0] == board[i][1] == board[i][2] or \
+           board[0][i] == board[1][i] == board[2][i]:
+            return board[i][i]
+
+    # Check the two diagonal lines
+    if board[0][0] == board[1][1] == board[2][2] or \
+       board[0][2] == board[1][1] == board[2][0]:
+        return board[1][1]
+    
+    return None
 
 
 def other_player(player):
     """Given the character for a player, returns the other player."""
-    return "O"  # FIXME
+    def other_player(player):
+        if player == "X":
+            return "O"
+        elif player == "O":
+            return "X"
+        else:
+            return None
