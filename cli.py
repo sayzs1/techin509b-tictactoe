@@ -11,7 +11,7 @@ if __name__ == '__main__':
     board = make_empty_board()
     winner = None
     current_user = 'O'
-    while winner == None:
+    while winner is None:
         print("f'Player {current_user}: take a turn!")
         
         # TODO: Show the board to the user.

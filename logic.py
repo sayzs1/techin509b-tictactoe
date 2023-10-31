@@ -28,12 +28,10 @@ def get_winner(board):
     return None
 
 
-def other_player(player):
-    """Given the character for a player, returns the other player."""
-    def other_player(player):
-        if player == "X":
-            return "O"
-        elif player == "O":
-            return "X"
-        else:
-            return None
+def other_player(current_user):
+    if current_user == "X":
+        return "O"
+    elif current_user == "O":
+        return "X"
+    else:
+        return None
