@@ -12,7 +12,7 @@ if __name__ == '__main__':
     winner = None
     current_user = 'O'
     while winner is None:
-        print("f'Player {current_user}: take a turn!")
+        print(f"Player {current_user}: take a turn!")
         
         # TODO: Show the board to the user.
         for row in board:
