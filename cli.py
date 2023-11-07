@@ -13,7 +13,7 @@ if __name__ == '__main__':
     current_user = 'O'
     while winner is None:
         print(f"Player {current_user}: take a turn!")
-        
+
         # TODO: Show the board to the user.
         for row in board:
             print(row)
@@ -35,8 +35,8 @@ if __name__ == '__main__':
 
         # TODO: Update who's turn it is.
         current_user = other_player(current_user)
-        winner = get_winner(board) 
-        if winner:
-            print(f'player{winner} wins!')
-        else:
-            print("it's a draw")
+        winner = get_winner(board)
+    if winner:
+      print(f'player{winner} wins!')
+    else:
+      print("it's a draw")
