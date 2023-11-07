@@ -35,3 +35,6 @@ def other_player(current_user):
         return "X"
     else:
         return None
+    
+def is_board_full(board):
+    return all(all(cell is not None for cell in row) for row in board)

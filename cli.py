@@ -36,7 +36,8 @@ if __name__ == '__main__':
         # TODO: Update who's turn it is.
         current_user = other_player(current_user)
         winner = get_winner(board)
+        if winner is None and is_board_full(board):
+            print("It's a draw!")
+            break 
     if winner:
       print(f'player{winner} wins!')
-    else:
-      print("it's a draw")
