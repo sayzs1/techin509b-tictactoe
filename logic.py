@@ -3,38 +3,102 @@
 # should be unit-testable.
 
 
-def make_empty_board():
-    return [
-        [None, None, None],
-        [None, None, None],
-        [None, None, None],
-    ]
+import random
 
+class TicTacToe:
+    def __init__(self):
+        self.board = self.make_empty_board()
+        self.current_user = 'O'
+        self.winner = None
 
-def get_winner(board):
-    """Determines the winner of the given board.
-    Returns 'X', 'O', or None."""
-    # Check rows and columns
-    for i in range(3):
-        if board[i][0] == board[i][1] == board[i][2] or \
-           board[0][i] == board[1][i] == board[2][i]:
-            return board[i][i]
+    @staticmethod
+    def make_empty_board():
+        return [
+            [None, None, None],
+            [None, None, None],
+            [None, None, None],
+        ]
 
-    # Check the two diagonal lines
-    if board[0][0] == board[1][1] == board[2][2] or \
-       board[0][2] == board[1][1] == board[2][0]:
-        return board[1][1]
-    
-    return None
+    def display_board(self):
+        for row in self.board:
+            print(row)
 
+    def input_move(self):
+        while True:
+            try:
+                move = input(f'Player {self.current_user}, please enter your next move, ranging from 0 to 2 (format: x,y): ')
+                x, y = map(int, move.split(','))
+                if self.board[x][y] is None:
+                    break
+                else:
+                    print("This position is already taken. Try another one.")
+            except (IndexError, ValueError):
+                print('Invalid input, please follow the rule.')
 
-def other_player(current_user):
-    if current_user == "X":
-        return "O"
-    elif current_user == "O":
-        return "X"
-    else:
+        return x, y
+
+    def update_board(self, x, y):
+        self.board[x][y] = self.current_user
+
+    def switch_player(self):
+        self.current_user = self.other_player()
+
+    def other_player(self):
+        if self.current_user == "X":
+            return "O"
+        elif self.current_user == "O":
+            return "X"
+        else:
+            return None
+
+    def get_winner(self):
+        for i in range(3):
+            if self.board[i][0] == self.board[i][1] == self.board[i][2] or \
+               self.board[0][i] == self.board[1][i] == self.board[2][i]:
+                return self.board[i][i]
+
+        if self.board[0][0] == self.board[1][1] == self.board[2][2] or \
+           self.board[0][2] == self.board[1][1] == self.board[2][0]:
+            return self.board[1][1]
+
         return None
-    
-def is_board_full(board):
-    return all(all(cell is not None for cell in row) for row in board)
+
+    def is_board_full(self):
+        for row in self.board:
+            if None in row:
+                return False
+        return True
+
+    def play_single_player(self):
+        while self.winner is None and not self.is_board_full():
+            self.display_board()
+
+            if self.current_user == 'O':
+                x, y = self.input_move()
+            else:
+                x, y = random.randint(0, 2), random.randint(0, 2)
+                while self.board[x][y] is not None:
+                    x, y = random.randint(0, 2), random.randint(0, 2)
+
+            self.update_board(x, y)
+            self.switch_player()
+            self.winner = self.get_winner()
+
+        self.display_result()
+
+    def play_two_players(self):
+        while self.winner is None and not self.is_board_full():
+            self.display_board()
+            x, y = self.input_move()
+            self.update_board(x, y)
+            self.switch_player()
+            self.winner = self.get_winner()
+
+        self.display_result()
+
+    def display_result(self):
+        self.display_board()
+        if self.winner:
+            print(f'Player {self.winner} wins!')
+        else:
+            print("It's a draw.")
