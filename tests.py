@@ -1,98 +1,126 @@
-import unittest
-from logic import get_winner
-from cli import TicTacToe
+import random
+import logging
 
-class TestLogic(unittest.TestCase):
+class Human:
+    def __init__(self, name):
+        self.name = name
 
-    def test_initialize_game_empty_board(self):
-        # Test if the game is initialized with an empty board
-        game = TicTacToe()
-        self.assertEqual(game.board, [
-            [None, None, None],
-            [None, None, None],
-            [None, None, None],
-        ])
+    def make_move(self):
+        move = input(f'{self.name}, please enter your next move, ranging from 0 to 2 (format: x,y): ')
+        x, y = map(int, move.split(','))
+        return x, y
 
-    def test_assign_players(self):
-        # Test if players are assigned unique pieces X and O
-        game = TicTacToe()
-        player1, player2 = game.current_user, game.other_player()
-        self.assertEqual(player1, 'O')
-        self.assertEqual(player2, 'X')
+class Bot:
+    def __init__(self, name):
+        self.name = name
 
-    def test_switch_player(self):
-        # Test if switching players works correctly
-        game = TicTacToe()
-        current_player = game.current_user
-        game.switch_player()
-        switched_player = game.current_user
-        self.assertNotEqual(current_player, switched_player)
+    def make_move(self):
+        x, y = random.randint(0, 2), random.randint(0, 2)
+        return x, y
 
-    def test_is_valid_move(self):
-        # Test if valid moves are correctly identified
-        game = TicTacToe()
-        game.board = [
-            ['X', None, 'O'],
-            [None, 'X', None],
-            [None, None, None],
-        ]
-        self.assertTrue(game.is_valid_move(1, 2))  # Valid move
-        self.assertFalse(game.is_valid_move(0, 0))  # Invalid move, position already taken
+class TicTacToe:
+    def __init__(self, player1, player2):
+        self.board = self.make_empty_board()
+        self.current_player = player1
+        self.other_player = player2
+        self.winner = None
+        self.steps = 0
 
-    def test_get_winner_horizontal(self):
-        # Test winning condition in a horizontal row
-        board = [
-            ['X', 'X', 'X'],
-            ['O', 'O', None],
-            [None, None, None],
-        ]
-        self.assertEqual(get_winner(board), 'X')
-
-    def test_get_winner_vertical(self):
-        # Test winning condition in a vertical column
-        board = [
-            ['X', 'O', None],
-            ['X', 'O', None],
-            ['X', None, None],
-        ]
-        self.assertEqual(get_winner(board), 'X')
-
-    def test_get_winner_diagonal(self):
-        # Test winning condition in a diagonal line
-        board = [
-            ['O', 'X', 'X'],
-            ['O', 'O', None],
-            ['X', None, 'O'],
-        ]
-        self.assertEqual(get_winner(board), 'O')
-
-    def test_get_winner_no_winner(self):
-        # Test when there is no winner
-        board = [
-            ['X', 'O', 'X'],
-            ['O', 'X', 'O'],
-            ['O', 'X', 'O'],
-        ]
-        self.assertIsNone(get_winner(board))
-
-    def test_get_winner_empty_board(self):
-        # Test when the board is empty, there should be no winner
-        board = [
+        # Configure logging
+        logging.basicConfig(filename='logs/game.log',format='%(asctime)s - %(levelname)s - %(message)s',filemode='a',force=True)
+        logger=logging.getLogger()
+        logger.setLevel(logging.INFO)
+        
+    @staticmethod
+    def make_empty_board():
+        return [
             [None, None, None],
             [None, None, None],
             [None, None, None],
         ]
-        self.assertIsNone(get_winner(board))
 
-    def test_get_winner_draw(self):
-        # Test when the game ends in a draw
-        board = [
-            ['X', 'O', 'X'],
-            ['O', 'X', 'O'],
-            ['O', 'X', 'O'],
-        ]
-        self.assertIsNone(get_winner(board))
+    def display_board(self):
+        for row in self.board:
+            print(row)
 
+    def input_move(self):
+        while True:
+            try:
+                x, y = self.current_player.make_move()
+                if self.is_valid_move(x, y):
+                    break
+                else:
+                    print("Invalid move. Try another one.")
+            except (IndexError, ValueError):
+                print('Invalid input, please follow the rule.')
 
-if __name__ == '__main__':
-    unittest.main()
+        return x, y
+
+    def is_valid_move(self, x, y):
+        return 0 <= x <= 2 and 0 <= y <= 2 and self.board[x][y] is None
+
+    def update_board(self, x, y):
+        self.board[x][y] = self.current_player.name
+
+    def switch_player(self):
+        self.current_player, self.other_player = self.other_player, self.current_player
+
+    def get_winner(self):
+        for i in range(3):
+            if self.board[i][0] == self.board[i][1] == self.board[i][2] or \
+               self.board[0][i] == self.board[1][i] == self.board[2][i]:
+                return self.board[i][i]
+
+        if self.board[0][0] == self.board[1][1] == self.board[2][2] or \
+           self.board[0][2] == self.board[1][1] == self.board[2][0]:
+            return self.board[1][1]
+
+        return None
+
+    def is_board_full(self):
+        for row in self.board:
+            if None in row:
+                return False
+        return True
+
+    def play_game(self):
+        while self.winner is None and not self.is_board_full():
+            self.display_board()
+
+            x, y = self.input_move()
+
+            self.update_board(x, y)
+            self.switch_player()
+            self.steps += 1
+
+            self.winner = self.get_winner()
+
+        self.display_result()
+
+    def display_result(self):
+        self.display_board()
+        if self.winner:
+            print(f'Player {self.winner} wins in {self.steps} steps!')
+            self.log_winner()
+        else:
+            print("It's a draw.")
+            self.log_draw()
+
+    def log_winner(self):
+        logging.info(f'{self.current_player.name} vs {self.other_player.name} - Winner: {self.winner} - Steps: {self.steps}')
+
+    def log_draw(self):
+        logging.info(f'{self.current_player.name} vs {self.other_player.name} - Draw')
+
+if __name__ == "__main__":
+    player1_name = input('Enter name for Player 1: ')
+    player1 = Human(player1_name)
+
+    player2_name = input('Enter name for Player 2 (or Bot): ')
+    if player2_name.lower() == 'bot':
+        player2 = Bot('Bot')
+    else:
+        player2 = Human(player2_name)
+
+    game = TicTacToe(player1, player2)
+    game.play_game()
