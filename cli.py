@@ -3,13 +3,38 @@
 # For core game logic, see logic.py.
 
 import random
+import logging
+
+class Human:
+    def __init__(self, name):
+        self.name = name
+
+    def make_move(self):
+        move = input(f'{self.name}, please enter your next move, ranging from 0 to 2 (format: x,y): ')
+        x, y = map(int, move.split(','))
+        return x, y
+
+class Bot:
+    def __init__(self, name):
+        self.name = name
+
+    def make_move(self):
+        x, y = random.randint(0, 2), random.randint(0, 2)
+        return x, y
 
 class TicTacToe:
-    def __init__(self):
+    def __init__(self, player1, player2):
         self.board = self.make_empty_board()
-        self.current_user = 'O'
+        self.current_player = player1
+        self.other_player = player2
         self.winner = None
+        self.steps = 0
 
+        # Configure logging
+        logging.basicConfig(filename='logs/game.log',format='%(asctime)s - %(levelname)s - %(message)s',filemode='a',force=True)
+        logger=logging.getLogger()
+        logger.setLevel(logging.INFO)
+        
     @staticmethod
     def make_empty_board():
         return [
@@ -25,8 +50,7 @@ class TicTacToe:
     def input_move(self):
         while True:
             try:
-                move = input(f'Player {self.current_user}, please enter your next move, ranging from 0 to 2 (format: x,y): ')
-                x, y = map(int, move.split(','))
+                x, y = self.current_player.make_move()
                 if self.is_valid_move(x, y):
                     break
                 else:
@@ -40,18 +64,10 @@ class TicTacToe:
         return 0 <= x <= 2 and 0 <= y <= 2 and self.board[x][y] is None
 
     def update_board(self, x, y):
-        self.board[x][y] = self.current_user
+        self.board[x][y] = self.current_player.name
 
     def switch_player(self):
-        self.current_user = self.other_player()
-
-    def other_player(self):
-        if self.current_user == "X":
-            return "O"
-        elif self.current_user == "O":
-            return "X"
-        else:
-            return None
+        self.current_player, self.other_player = self.other_player, self.current_player
 
     def get_winner(self):
         for i in range(3):
@@ -71,29 +87,16 @@ class TicTacToe:
                 return False
         return True
 
-    def play_single_player(self):
+    def play_game(self):
         while self.winner is None and not self.is_board_full():
             self.display_board()
 
-            if self.current_user == 'O':
-                x, y = self.input_move()
-            else:
-                x, y = random.randint(0, 2), random.randint(0, 2)
-                while not self.is_valid_move(x, y):
-                    x, y = random.randint(0, 2), random.randint(0, 2)
-
-            self.update_board(x, y)
-            self.switch_player()
-            self.winner = self.get_winner()
-
-        self.display_result()
-
-    def play_two_players(self):
-        while self.winner is None and not self.is_board_full():
-            self.display_board()
             x, y = self.input_move()
+
             self.update_board(x, y)
             self.switch_player()
+            self.steps += 1
+
             self.winner = self.get_winner()
 
         self.display_result()
@@ -101,6 +104,28 @@ class TicTacToe:
     def display_result(self):
         self.display_board()
         if self.winner:
-            print(f'Player {self.winner} wins!')
+            print(f'Player {self.winner} wins in {self.steps} steps!')
+            self.log_winner()
         else:
             print("It's a draw.")
+            self.log_draw()
+
+    def log_winner(self):
+        logging.info(f'{self.current_player.name} vs {self.other_player.name} - Winner: {self.winner} - Steps: {self.steps}')
+
+    def log_draw(self):
+        logging.info(f'{self.current_player.name} vs {self.other_player.name} - Draw')
+
+
+if __name__ == "__main__":
+    player1_name = input('Enter name for Player 1: ')
+    player1 = Human(player1_name)
+
+    player2_name = input('Enter name for Player 2 (or Bot): ')
+    if player2_name.lower() == 'bot':
+        player2 = Bot('Bot')
+    else:
+        player2 = Human(player2_name)
+
+    game = TicTacToe(player1, player2)
+    game.play_game()
