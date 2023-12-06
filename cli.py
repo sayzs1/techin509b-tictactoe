@@ -29,12 +29,13 @@ class TicTacToe:
         self.other_player = player2
         self.winner = None
         self.steps = 0
+        self.first_move_coordinates = None
 
         # Configure logging
         logging.basicConfig(filename='logs/game.log',format='%(asctime)s - %(levelname)s - %(message)s',filemode='a',force=True)
         logger=logging.getLogger()
         logger.setLevel(logging.INFO)
-        
+
     @staticmethod
     def make_empty_board():
         return [
@@ -57,6 +58,11 @@ class TicTacToe:
                     print("Invalid move. Try another one.")
             except (IndexError, ValueError):
                 print('Invalid input, please follow the rule.')
+
+        # Set the first move details if not already set
+        if self.first_move_coordinates is None:
+            self.first_move_player = self.current_player.name
+            self.first_move_coordinates = (x, y)
 
         return x, y
 
@@ -111,10 +117,10 @@ class TicTacToe:
             self.log_draw()
 
     def log_winner(self):
-        logging.info(f'{self.current_player.name} vs {self.other_player.name} - Winner: {self.winner} - Steps: {self.steps}')
+        logging.info(f'{self.current_player.name} vs {self.other_player.name} - {self.first_move_player} made the first move at {self.first_move_coordinates} - Winner: {self.winner} - Steps: {self.steps}')
 
     def log_draw(self):
-        logging.info(f'{self.current_player.name} vs {self.other_player.name} - Draw')
+        logging.info(f'{self.current_player.name} vs {self.other_player.name} - {self.first_move_player} made the first move at {self.first_move_coordinates} - Draw - Steps: {self.steps}')
 
 
 if __name__ == "__main__":
@@ -128,4 +134,5 @@ if __name__ == "__main__":
         player2 = Human(player2_name)
 
     game = TicTacToe(player1, player2)
+
     game.play_game()
