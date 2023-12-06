@@ -1,9 +1,35 @@
-2023-11-29 02:45:49,227 - INFO - Bot vs A - Winner: A - Steps: 5
-2023-11-29 02:47:37,925 - INFO - Bot vs A - Winner: A - Steps: 5
-2023-11-29 02:51:38,697 - INFO - Bot vs A - Winner: A - Steps: 5
-2023-11-29 02:55:03,046 - INFO - C vs A - Winner: A - Steps: 8
-2023-11-29 03:00:43,923 - INFO - Bot vs C - Draw
-2023-11-29 05:07:21,520 - INFO - A vs C - Winner: C - Steps: 7
-2023-11-29 05:08:06,164 - INFO - A vs Bot - Winner: Bot - Steps: 8
-2023-11-29 05:09:24,602 - INFO - A vs C - Winner: C - Steps: 7
-2023-11-29 05:10:01,968 - INFO - Bot vs C - Winner: C - Steps: 7
+2023-12-05 16:06:10,174 - INFO - A vs Bot - A made the first move at (1, 1) - Winner: Bot - Steps: 6
+2023-12-05 16:26:39,295 - INFO - A vs C - A made the first move at (1, 0) - Winner: C - Steps: 8
+2023-12-05 16:27:23,700 - INFO - Bot vs C - C made the first move at (1, 0) - Winner: C - Steps: 5
+2023-12-05 16:27:51,750 - INFO - S vs Bot - S made the first move at (1, 1) - Winner: Bot - Steps: 8
+2023-12-05 16:28:39,014 - INFO - A vs D - D made the first move at (1, 1) - Winner: D - Steps: 9
+2023-12-05 16:29:12,992 - INFO - Bot vs Q - Q made the first move at (1, 1) - Winner: Q - Steps: 9
+2023-12-05 16:29:48,633 - INFO - L vs M - M made the first move at (0, 1) - Winner: M - Steps: 5
+2023-12-05 16:30:07,503 - INFO - Bot vs M - M made the first move at (1, 1) - Winner: M - Steps: 5
+2023-12-05 16:31:58,921 - INFO - Bot vs P - P made the first move at (2, 1) - Winner: P - Steps: 7
+2023-12-05 16:32:40,873 - INFO - A vs O - O made the first move at (1, 1) - Winner: O - Steps: 7
+2023-12-05 16:33:28,634 - INFO - C vs M - M made the first move at (1, 1) - Draw - Steps: 9
+2023-12-05 16:34:53,933 - INFO - Q vs C - C made the first move at (1, 1) - Winner: C - Steps: 7
+2023-12-05 16:35:39,757 - INFO - Q vs A - A made the first move at (0, 0) - Winner: A - Steps: 5
+2023-12-05 16:36:28,786 - INFO - W vs C - C made the first move at (1, 1) - Winner: C - Steps: 7
+2023-12-05 16:37:46,659 - INFO - Bot vs W - W made the first move at (1, 1) - Winner: W - Steps: 9
+2023-12-05 16:38:28,101 - INFO - L vs R - R made the first move at (0, 0) - Draw - Steps: 9
+2023-12-05 16:39:15,629 - INFO - Q vs I - I made the first move at (2, 0) - Winner: I - Steps: 5
+2023-12-05 16:40:24,358 - INFO - L vs C - C made the first move at (1, 2) - Winner: C - Steps: 7
+2023-12-05 16:40:54,939 - INFO - L vs M - M made the first move at (0, 1) - Winner: M - Steps: 9
+2023-12-05 16:41:31,696 - INFO - E vs Bot - E made the first move at (1, 1) - Winner: Bot - Steps: 6
+2023-12-05 16:42:59,610 - INFO - Bot vs K - K made the first move at (2, 1) - Winner: K - Steps: 5
+2023-12-05 16:43:34,211 - INFO - A vs M - M made the first move at (2, 2) - Winner: M - Steps: 7
+2023-12-05 16:44:01,156 - INFO - M vs E - E made the first move at (1, 1) - Winner: E - Steps: 7
+2023-12-05 16:44:44,325 - INFO - C vs L - C made the first move at (2, 0) - Winner: L - Steps: 8
+2023-12-05 16:45:10,486 - INFO - Bot vs S - S made the first move at (1, 1) - Winner: S - Steps: 7
+2023-12-05 16:46:04,925 - INFO - W vs E - E made the first move at (2, 1) - Winner: E - Steps: 9
+2023-12-05 16:46:33,001 - INFO - Bot vs R - R made the first move at (0, 1) - Winner: R - Steps: 7
+2023-12-05 16:47:16,428 - INFO - A vs J - J made the first move at (2, 2) - Winner: J - Steps: 9
+2023-12-05 16:47:55,178 - INFO - C vs L - C made the first move at (0, 1) - Winner: L - Steps: 8
+2023-12-05 16:48:14,727 - INFO - P vs Bot - P made the first move at (0, 1) - Winner: Bot - Steps: 8
+2023-12-05 16:48:35,763 - INFO - Y vs C - Y made the first move at (2, 2) - Winner: Y - Steps: 6
+2023-12-05 16:49:24,251 - INFO - E vs O - E made the first move at (0, 2) - Winner: O - Steps: 8
+2023-12-05 16:49:58,714 - INFO - X vs O - O made the first move at (2, 1) - Draw - Steps: 9
+2023-12-05 16:50:41,498 - INFO - X vs O - O made the first move at (0, 1) - Draw - Steps: 9
+2023-12-05 16:51:17,675 - INFO - X vs E - E made the first move at (1, 2) - Draw - Steps: 9
